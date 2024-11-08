@@ -1,6 +1,7 @@
 import {useState} from 'react';
 
 
+
 const initialGameBoard = 
  [
 [null, null,null],
@@ -9,21 +10,27 @@ const initialGameBoard =
 ];
 
 
-export default function GameBoard(){
+export default function GameBoard({onSelectSquare, activePlayerSymbol}){
     //we are using this state to manage and update the gameboard
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
 
+
+    
     //create on click function when button is clicked
     //prevgameBoard is automatically passed into setGameBoard, now we can use it to update the gameboard
     function handleSelectSquare(rowIndex, colIndex){
         setGameBoard( (prevGameBoard)=> {
             //replace one field with an X or an O
 
-            const updatedBoard = [...prevGameBoard.map((innerArray) =>  [...innerArray]  )];
-            updatedBoard[rowIndex][colIndex] = 'X';
+            //transforming the innterArrayElements using the spread operator to create a deep copy
+            const updatedBoard = [...prevGameBoard.map((innerArrayElement) =>  [...innerArrayElement]  )];
+            updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
             return updatedBoard;
         } );
+
+
+        onSelectSquare();
     }
 
 
